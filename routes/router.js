@@ -39,10 +39,11 @@ router.get('/getUsers', async (req, res) => {
         res.status(201).json(usersData)
     } catch (error) {
         console.log('error' + error.message);
+        res.status(400).json(error.message)
     }
 })
 
-router.put('/users/:id', async(req, res) => {
+router.put('/editUser/:id', async(req, res) => {
     try {
     const userId = req.params.id;
     const { name, email ,number} = req.body;
@@ -50,11 +51,11 @@ router.put('/users/:id', async(req, res) => {
     console.log(userId,name,email,number);
     // Find the user by ID
     const user = await User.findOneAndUpdate({_id :userId},req.body,{new:true});
-  
+    //   console.log('user===',user)
     res.status(201).json(user)
     } catch(error) {
-        res.status(400)
-        console.log("error" + error.message);
+        res.status(400).json(error.message)
+        // console.log("error------------" + error);
     }
 
 
